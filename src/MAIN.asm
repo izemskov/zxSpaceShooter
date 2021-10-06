@@ -401,43 +401,7 @@ P_KEY_SP:
         JR CONTINUE_P_KEY_SP
         
 FIRE:   
-        PUSH HL
-        PUSH AF
-        
-        ; load fire info
-        LD HL,FIRE_INFO
-        LD A,(HL)
-        
-        CP 0
-        JR Z,CREATE_FIRE
-        JR NOT_CREATE_FIRE
-        
-CREATE_FIRE:
-        LD A,1
-        LD (HL),A
-        
-        ; put fire coordinates of player
-        ; load player coordinates
-        PUSH BC
-        
-        PUSH HL        
-        LD HL,PLAYER_COORD
-        LD B,(HL)
-        INC HL
-        LD C,(HL)
-        POP HL
-        
-        INC HL
-        LD (HL),B
-        INC HL
-        LD (HL),C
-        
-        POP BC        
-        
-NOT_CREATE_FIRE:                
-        
-        POP AF
-        POP HL     
+        CALL DO_SHOT
         
 CONTINUE_P_KEY_SP:
         INC A
@@ -461,44 +425,7 @@ AFTER_PROCESS_SP:
         ;;;;;;;;;;;;
         ; move fires
         ;;;;;;;;;;;;
-        LD HL,FIRE_INFO
-        LD A,(HL)
-        CP 0
-        JR Z,END_FIRE_MOVING
-        CP 1
-        JR Z,MOVE_FIRE
-INC_MOVE_COUNTER:        
-        LD A,(HL)
-        INC A
-        CP 30
-        JR Z,RESET_MOVE_COUNTER
-        JR WRITE_MOVE_COUNTER
-        
-RESET_MOVE_COUNTER:
-        LD A,1
-        
-WRITE_MOVE_COUNTER:        
-        LD (HL),A
-        JR END_FIRE_MOVING
-        
-MOVE_FIRE:        
-        PUSH HL
-        INC HL
-        LD B,(HL)
-        LD A,B
-        CP 0
-        JR Z,FIRE_BOUND_UP        
-        DEC B
-        LD (HL),B
-        POP HL        
-        JR INC_MOVE_COUNTER        
-        
-FIRE_BOUND_UP:
-        POP HL
-        LD A,0
-        LD (HL),A
-                                                                         
-END_FIRE_MOVING:
+        CALL MOVE_SHOT
 
         POP AF        
         POP BC
@@ -512,10 +439,10 @@ END_FIRE_MOVING:
     ; BC - Y [0..23] AND
     ;      X [0..31]
     ; A  - ATTRIBUTES
-    ; 0..3 - Ink
-    ; 4..6 - Paper
-    ; 5    - Bright
-    ; 6    - Flash
+    ; 0..2 - Ink
+    ; 3..5 - Paper
+    ; 6    - Bright
+    ; 7    - Flash
 ; Working with video memory directly.
 ; For this I need to calculate the 
 ; offset from start address of video
@@ -853,8 +780,9 @@ END_SKIP_FRAME2:
         POP BC
         POP AF
 
-        RET       
-        
+        RET  
+
+        INCLUDE "FIRE.asm"        
 
 ; GLOBAL VARIABLES AND DATA
 SPRITE_PLAYER   DEFB 2,1
@@ -874,11 +802,14 @@ EMPTY_SPRITE2   DEFB 2,1
                 ; 3,4 - old coordinates
 PLAYER_COORD    DEFB 0,0,0,0,0
 
-                ; 0   - count fires (max 10)
+                ; 0   - count current fires (max 3)
                 ; 1   - first fire move counter
                 ; 3,4 - current coordinates
-FIRE_INFO       DEFB 0                
-                DEFB 0,0,0
+                ; 5,6 - old coordinates
+FIRE_INFO       DEFB 0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
 
 FIRE_SPITE      DEFB 1,1
                 DEFB 0,0,69
