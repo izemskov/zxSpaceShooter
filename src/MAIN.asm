@@ -130,27 +130,7 @@ NOT_CLEAR_PLAYER:
         POP AF
                         
         LD HL,SPRITE_PLAYER
-        CALL DRAW_SPRITE
-        
-        PUSH AF
-        ; draw fire
-        LD HL,FIRE_INFO
-        LD A,(HL)
-        CP 0
-        JR NZ,DRAW_FIRE_SPITE
-        JR NOT_DRAW_FIRE_SPRITE
-        
-DRAW_FIRE_SPITE:
-        INC HL
-        LD B,(HL)
-        INC HL
-        LD C,(HL)
-        LD HL,FIRE_SPITE
-        LD A,1
-        CALL DRAW_SPRITE
-        
-NOT_DRAW_FIRE_SPRITE:
-        POP AF
+        CALL DRAW_SPRITE               
         
         JR MAIN_LOOP
         
@@ -401,7 +381,7 @@ P_KEY_SP:
         JR CONTINUE_P_KEY_SP
         
 FIRE:   
-        CALL DO_SHOT
+        CALL CREATE_SHOT
         
 CONTINUE_P_KEY_SP:
         INC A
@@ -803,7 +783,7 @@ EMPTY_SPRITE2   DEFB 2,1
 PLAYER_COORD    DEFB 0,0,0,0,0
 
                 ; 0   - count current fires (max 3)
-                ; 1   - first fire move counter
+                ; 1   - fire move counter
                 ; 3,4 - current coordinates
                 ; 5,6 - old coordinates
 FIRE_INFO       DEFB 0
