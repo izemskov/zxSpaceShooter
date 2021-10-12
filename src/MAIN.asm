@@ -787,16 +787,17 @@ PLAYER_COORD    DEFB 0,0,0,0,0
                 ; 0   - count current fires (max 3)
                 ; 1   - fire move counter
                 ; 3,4 - current coordinates
-                ; 5,6 - old coordinates
+                ; 5   - flag changes coordinates
+                ; 6,7 - old coordinates
 FIRE_INFO       DEFB 0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
-                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0
 
 FIRE_SPITE      DEFB 1,1
                 DEFB 0,0,69
