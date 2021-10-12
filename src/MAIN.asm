@@ -130,7 +130,9 @@ NOT_CLEAR_PLAYER:
         POP AF
                         
         LD HL,SPRITE_PLAYER
-        CALL DRAW_SPRITE               
+        CALL DRAW_SPRITE
+
+        CALL DRAW_SHOT
         
         JR MAIN_LOOP
         
@@ -790,6 +792,11 @@ FIRE_INFO       DEFB 0
                 DEFB 0,0,0,0,0
                 DEFB 0,0,0,0,0
                 DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
+                DEFB 0,0,0,0,0
 
 FIRE_SPITE      DEFB 1,1
                 DEFB 0,0,69
@@ -808,3 +815,5 @@ end_file:
         savehob "game.$C", "game.C", begin_file, end_file - begin_file
 
         savesna "game.sna", begin_file
+        
+        labelslist "game.l"

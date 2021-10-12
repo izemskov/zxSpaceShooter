@@ -32,11 +32,11 @@ CREATE_SHOT:
         
         ; find free slot number
         PUSH AF
-START_FIND_SLOT:
         ; couter for skip memory
         LD B,0
         ; mask for mark busy slots
         LD C,%00000001
+START_FIND_SLOT:        
         RRCA
         JR NC,END_FIND_SLOT
         
@@ -53,7 +53,8 @@ END_FIND_SLOT:
         POP AF
         ; set slot place
         OR C
-        LD (HL),A        
+        LD (HL),A
+        INC HL
         
         ; shift memory to free shot slot        
         LD DE,5
@@ -211,7 +212,7 @@ START_DRAW_SHOT:
         AND D
         
         CP 0
-        JR NZ,PROCESS_DRAW_SHOT
+        JR NZ,PR_DRAW_SHOT
 CONTINUE_DRAW_SHOTS:
         LD BC,5
         ADD HL,BC
@@ -221,12 +222,13 @@ CONTINUE_DRAW_SHOTS:
         LD D,A
         CP 1
         JR Z,END_SHOT_DRAWING
-        JR START_DRAW_SHOT
-
-        
-        
-PROCESS_DRAW_SHOT:
+        JR START_DRAW_SHOT        
+               
+PR_DRAW_SHOT:
         PUSH HL
+        ; skip move counter
+        INC HL
+        
         LD B,(HL)
         INC HL
         LD C,(HL)
@@ -234,6 +236,8 @@ PROCESS_DRAW_SHOT:
         LD A,1
         CALL DRAW_SPRITE
         POP HL
+        
+        JR CONTINUE_DRAW_SHOTS
         
 END_SHOT_DRAWING:
         
