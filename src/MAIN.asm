@@ -801,7 +801,7 @@ FIRE_INFO       DEFB 0
 
 FIRE_SPITE      DEFB 1,1
                 DEFB 0,0,69
-                DEFB 0,0,24,60,60,24,0,0
+                DEFB 0,0,24,60,60,24,0,0                               
                 
 KEY_INFO_W      DEFB 0
 KEY_INFO_S      DEFB 0

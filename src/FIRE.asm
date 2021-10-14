@@ -147,7 +147,7 @@ PROCESS_MOVE_SHOT:
 INC_MOVE_COUNTER:        
         LD A,(HL)
         INC A
-        CP 30
+        CP 10
         JR Z,RESET_MOVE_COUNTER
         JR WRITE_MOVE_COUNTER
         
@@ -280,9 +280,14 @@ NOT_CLEAR_SHOT:
         
         POP AF
         
+        LD A,B
+        CP 0
+        JR Z,OUTOFBOUND_SHOT
+        
         LD HL,FIRE_SPITE
         LD A,1
         CALL DRAW_SPRITE
+OUTOFBOUND_SHOT:
         POP HL
         
         JR CONTINUE_DRAW_SHOTS
