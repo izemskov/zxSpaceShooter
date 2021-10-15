@@ -764,7 +764,9 @@ END_SKIP_FRAME2:
 
         RET  
 
-        INCLUDE "FIRE.asm"        
+        INCLUDE "FIRE.asm"
+        INCLUDE "ENEMY.asm"
+        INCLUDE "RANDOM.asm"
 
 ; GLOBAL VARIABLES AND DATA
 SPRITE_PLAYER   DEFB 2,1
@@ -772,6 +774,13 @@ SPRITE_PLAYER   DEFB 2,1
                 DEFB 0,3,7,15,127,255,113,0
                 DEFB 1,0,69
                 DEFB 0,192,224,240,254,255,142,0
+                
+SPRITE_ALIEN    DEFB 1,2
+                DEFB 0,0,69
+                ; frame 1
+                DEFB 24,60,126,219,255,36,90,165
+                ; frame 2
+                DEFB 24,60,126,219,255,90,129,66
                 
 EMPTY_SPRITE2   DEFB 2,1
                 DEFB 0,0,69
@@ -784,8 +793,8 @@ EMPTY_SPRITE2   DEFB 2,1
                 ; 3,4 - old coordinates
 PLAYER_COORD    DEFB 0,0,0,0,0
 
-                ; 0   - count current fires (max 3)
-                ; 1   - fire move counter
+                ; 0   - bit mask current shots (max 8 shots)
+                ; 1   - shot move counter
                 ; 3,4 - current coordinates
                 ; 5   - flag changes coordinates
                 ; 6,7 - old coordinates
@@ -801,7 +810,26 @@ FIRE_INFO       DEFB 0
 
 FIRE_SPITE      DEFB 1,1
                 DEFB 0,0,69
-                DEFB 0,0,24,60,60,24,0,0                               
+                DEFB 0,0,24,60,60,24,0,0
+                
+ENEMY_INFO      DEFB 0
+                ; 0     - move counter
+                ; 1,2   - current coordinates
+                ; 3     - flag changes coordinates
+                ; 4,5   - old coordinates
+                ; 6     - is shot
+                ; 7     - shot move counter
+                ; 8,9   - shot current coordinates
+                ; 10    - flag changes shot coordinates
+                ; 11,12 - old coordinates                
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
                 
 KEY_INFO_W      DEFB 0
 KEY_INFO_S      DEFB 0
