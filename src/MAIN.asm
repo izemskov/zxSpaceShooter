@@ -69,7 +69,7 @@ begin_file:
         CALL SCREEN_STREAM
         
         LD A,%01000101
-        CALL FILL_BACKGROUND
+        CALL FILL_BACKGROUND               
               
         ; start frame
         LD A,1
@@ -133,6 +133,17 @@ NOT_CLEAR_PLAYER:
         CALL DRAW_SPRITE
 
         CALL DRAW_SHOT
+        
+        CALL DRAW_ENEMY
+        
+        ; create enemy        
+        PUSH AF
+        CALL GET_RANDOM
+        CP 2
+        JR NC,MAIN_LOOP_NOT_CE
+        CALL CREATE_ENEMY
+MAIN_LOOP_NOT_CE:        
+        POP AF
         
         JR MAIN_LOOP
         
@@ -781,6 +792,10 @@ SPRITE_ALIEN    DEFB 1,2
                 DEFB 24,60,126,219,255,36,90,165
                 ; frame 2
                 DEFB 24,60,126,219,255,90,129,66
+                
+EMPTY_SPRITE1   DEFB 1,1
+                DEFB 0,0,69
+                DEFB 0,0,0,0,0,0,0,0                
                 
 EMPTY_SPRITE2   DEFB 2,1
                 DEFB 0,0,69

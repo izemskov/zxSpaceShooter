@@ -27,3 +27,13 @@ START_GET_RANDOM_X:
 END_GET_RANDOM_X:        
         
         RET
+                
+;;;;;;;;;;;;;;;;;;;;;;;
+; GET RANDOM FUNCTION ;
+;;;;;;;;;;;;;;;;;;;;;;;
+;RETURN:
+;   A - random number [0..127]
+GET_RANDOM:
+        LD A,R
+        
+        RET

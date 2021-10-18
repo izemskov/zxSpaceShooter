@@ -264,7 +264,7 @@ CLEAR_SHOT:
         LD B,(HL)
         INC HL
         LD C,(HL)
-        LD HL,EMPTY_SPRITE2
+        LD HL,EMPTY_SPRITE1
         CALL DRAW_SPRITE
         
         POP BC
