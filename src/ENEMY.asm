@@ -91,6 +91,9 @@ ENEMY_END_SHIFT_MEM:
         LD (HL),B
         INC HL
         LD (HL),C
+        ; current frame
+        INC HL
+        LD (HL),1
         
         POP BC
         
@@ -144,7 +147,7 @@ PROCESS_MOVE_ENEMY:
 ENEMY_INC_MOVE_COUNTER:
         LD A,(HL)
         INC A
-        CP 10
+        CP 25
         JR Z,ENEMY_RESET_MOVE_COUNTER
         JR ENEMY_WRITE_MOVE_COUNTER
         
@@ -169,6 +172,20 @@ DO_MOVE_ENEMY:
         INC HL        
         INC HL
         LD (HL),1
+        
+        ; change current frame
+        INC HL
+        INC HL
+        INC HL
+        LD A,(HL)
+        INC A
+        CP 3
+        JR NZ,WRITE_CURRENT_FRAME
+        ; reset current frame
+        LD A,1        
+
+WRITE_CURRENT_FRAME:        
+        LD (HL),A
         
         POP HL
         JR ENEMY_INC_MOVE_COUNTER
@@ -250,6 +267,8 @@ PR_DRAW_ENEMY:
         JR NOT_CLEAR_ENEMY
         
 CLEAR_ENEMY:
+        PUSH HL
+        
         ; for next time
         LD (HL),0
         
@@ -273,6 +292,8 @@ CLEAR_ENEMY:
         INC HL
         LD (HL),C
         
+        POP HL
+        
 NOT_CLEAR_ENEMY:
         
         POP AF               
@@ -280,9 +301,13 @@ NOT_CLEAR_ENEMY:
         LD A,B
         CP 23
         JR Z,OUTOFBOUND_ENEMY
-        
+                
+        ; load current frame
+        INC HL
+        INC HL
+        INC HL
+        LD A,(HL)
         LD HL,SPRITE_ALIEN
-        LD A,1
         CALL DRAW_SPRITE
 OUTOFBOUND_ENEMY:
         POP HL
