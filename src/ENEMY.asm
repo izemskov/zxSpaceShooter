@@ -261,7 +261,7 @@ CLEAR_ENEMY:
         LD B,(HL)
         INC HL
         LD C,(HL)
-        LD HL,EMPTY_SPRITE1
+        LD HL,EMPTY_SPRITE1                       
         CALL DRAW_SPRITE
         
         POP BC
@@ -277,9 +277,14 @@ NOT_CLEAR_ENEMY:
         
         POP AF               
         
+        LD A,B
+        CP 23
+        JR Z,OUTOFBOUND_ENEMY
+        
         LD HL,SPRITE_ALIEN
         LD A,1
         CALL DRAW_SPRITE
+OUTOFBOUND_ENEMY:
         POP HL
         
         JR CONTINUE_DRAW_ENEMY
