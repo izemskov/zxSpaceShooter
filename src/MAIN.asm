@@ -419,6 +419,8 @@ AFTER_PROCESS_SP:
         ; move fires
         ;;;;;;;;;;;;
         CALL MOVE_SHOT
+        
+        CALL MOVE_ENEMY
 
         POP AF        
         POP BC
@@ -832,19 +834,20 @@ ENEMY_INFO      DEFB 0
                 ; 1,2   - current coordinates
                 ; 3     - flag changes coordinates
                 ; 4,5   - old coordinates
-                ; 6     - is shot
-                ; 7     - shot move counter
-                ; 8,9   - shot current coordinates
-                ; 10    - flag changes shot coordinates
-                ; 11,12 - old coordinates                
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0
+                ; 6     - current frame
+                ; 7     - is shot
+                ; 8     - shot move counter
+                ; 9,10  - shot current coordinates
+                ; 11    - flag changes shot coordinates
+                ; 12,13 - old coordinates                
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
                 
 KEY_INFO_W      DEFB 0
 KEY_INFO_S      DEFB 0

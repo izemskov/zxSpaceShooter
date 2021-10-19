@@ -57,7 +57,7 @@ ENEMY_END_FIND_SLOT:
         INC HL
         
         ; shift memory to free enemy slot        
-        LD DE,12
+        LD DE,13
         LD A,B
         CP 0
         JR Z,ENEMY_END_SHIFT_MEM
@@ -104,6 +104,102 @@ NOT_CREATE_ENEMY:
         RET
         
 ;;;;;;;;;;;;;;;;;;;;;;;
+; MOVE ENEMY FUNCTION ;
+;;;;;;;;;;;;;;;;;;;;;;;
+MOVE_ENEMY:
+        PUSH AF
+        PUSH BC
+        PUSH HL
+        PUSH DE
+        
+        ; load enemy info
+        LD HL,ENEMY_INFO
+        LD E,(HL)
+        INC HL
+        
+        LD D,%00000001        
+START_MOVE_ENEMY: 
+        LD A,E
+        AND D
+        
+        CP 0
+        JR NZ,PROCESS_MOVE_ENEMY
+        
+CONTINUE_MOVE_ENEMIES:
+        LD BC,13
+        ADD HL,BC
+
+        LD A,D
+        RLCA
+        LD D,A
+        CP 1
+        JR Z,END_ENEMY_MOVING
+        JR START_MOVE_ENEMY
+        
+PROCESS_MOVE_ENEMY:
+        ; load move counter
+        LD A,(HL)        
+        CP 0
+        JR Z,DO_MOVE_ENEMY
+ENEMY_INC_MOVE_COUNTER:
+        LD A,(HL)
+        INC A
+        CP 10
+        JR Z,ENEMY_RESET_MOVE_COUNTER
+        JR ENEMY_WRITE_MOVE_COUNTER
+        
+ENEMY_RESET_MOVE_COUNTER:
+        LD A,0
+        
+ENEMY_WRITE_MOVE_COUNTER:        
+        LD (HL),A
+        JR CONTINUE_MOVE_ENEMIES
+        
+DO_MOVE_ENEMY:
+        PUSH HL
+        
+        INC HL
+        LD B,(HL)
+        LD A,B
+        CP 23
+        JR Z,ENEMY_BOUND_DOWN
+        INC B
+        LD (HL),B
+        ; set change coordinates flag
+        INC HL        
+        INC HL
+        LD (HL),1
+        
+        POP HL
+        JR ENEMY_INC_MOVE_COUNTER
+        
+ENEMY_BOUND_DOWN:
+        POP HL
+        ; delete current enemy
+        PUSH HL
+        PUSH DE
+        LD A,D
+        CPL
+        LD D,A
+                       
+        LD HL,ENEMY_INFO
+        LD A,(HL)
+        AND D                             
+        LD (HL),A
+        
+        POP DE
+        POP HL
+                                                                         
+END_ENEMY_MOVING:
+
+        POP DE
+        POP HL
+        POP BC
+        POP AF
+
+        RET        
+        
+;;;;;;;;;;;;;;;;;;;;;;;
 ; DRAW ENEMY FUNCTION ;
 ;;;;;;;;;;;;;;;;;;;;;;;
 DRAW_ENEMY:
@@ -125,7 +221,7 @@ START_DRAW_ENEMY:
         CP 0
         JR NZ,PR_DRAW_ENEMY
 CONTINUE_DRAW_ENEMY:
-        LD BC,12
+        LD BC,13
         ADD HL,BC
 
         LD A,D
