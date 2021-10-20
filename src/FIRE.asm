@@ -170,10 +170,14 @@ DO_MOVE_SHOT:
         LD (HL),B
         ; set change coordinates flag
         INC HL        
+        LD C,(HL)
         INC HL
         LD (HL),1
         
-        POP HL
+        CALL CHECK_SHOT_COLLISION
+        
+        POP HL               
+        
         JR INC_MOVE_COUNTER
         
 SHOT_BOUND_UP:

@@ -206,7 +206,7 @@ ENEMY_BOUND_DOWN:
         
         POP DE
         POP HL
-                                                                         
+
 END_ENEMY_MOVING:
 
         POP DE
