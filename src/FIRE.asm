@@ -175,6 +175,9 @@ DO_MOVE_SHOT:
         LD (HL),1
         
         CALL CHECK_SHOT_COLLISION
+        ; check A registry for destroy shot
+        CP 0
+        JR Z,SHOT_BOUND_UP
         
         POP HL               
         
@@ -196,7 +199,9 @@ SHOT_BOUND_UP:
         
         POP DE
         POP HL
-                                                                         
+        
+        JR CONTINUE_MOVE_SHOTS
+
 END_SHOT_MOVING:
 
         POP DE
@@ -245,44 +250,7 @@ PR_DRAW_SHOT:
         
         LD B,(HL)
         INC HL
-        LD C,(HL)
-        
-        ; check shot coordinates was changed
-        PUSH AF
-        
-        INC HL
-        LD A,(HL)
-        CP 1
-        JR Z,CLEAR_SHOT
-        JR NOT_CLEAR_SHOT
-        
-CLEAR_SHOT:
-        ; for next time
-        LD (HL),0
-        
-        PUSH HL
-        PUSH BC
-        
-        ; load old coordinates
-        INC HL
-        LD B,(HL)
-        INC HL
-        LD C,(HL)
-        LD HL,EMPTY_SPRITE1
-        CALL DRAW_SPRITE
-        
-        POP BC
-        POP HL
-        
-        ; put new coordinates to old coordinates
-        INC HL
-        LD (HL),B
-        INC HL
-        LD (HL),C
-        
-NOT_CLEAR_SHOT:
-        
-        POP AF
+        LD C,(HL)               
         
         LD A,B
         CP 0

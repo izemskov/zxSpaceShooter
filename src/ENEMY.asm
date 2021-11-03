@@ -257,46 +257,7 @@ PR_DRAW_ENEMY:
         INC HL
         LD C,(HL)
         
-        ; check enemy coordinates was changed
-        PUSH AF
-        
-        INC HL
-        LD A,(HL)
-        CP 1
-        JR Z,CLEAR_ENEMY
-        JR NOT_CLEAR_ENEMY
-        
-CLEAR_ENEMY:
-        PUSH HL
-        
-        ; for next time
-        LD (HL),0
-        
-        PUSH HL
-        PUSH BC
-        
-        ; load old coordinates
-        INC HL
-        LD B,(HL)
-        INC HL
-        LD C,(HL)
-        LD HL,EMPTY_SPRITE1                       
-        CALL DRAW_SPRITE
-        
-        POP BC
-        POP HL
-        
-        ; put new coordinates to old coordinates
-        INC HL
-        LD (HL),B
-        INC HL
-        LD (HL),C
-        
-        POP HL
-        
-NOT_CLEAR_ENEMY:
-        
-        POP AF               
+        INC HL              
         
         LD A,B
         CP 23
