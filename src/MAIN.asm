@@ -64,38 +64,22 @@ begin_file:
         LD HL,PLAYER_COORD
         LD (HL),#05
         INC HL
-        LD (HL),#05        
-        INC HL
-        LD (HL),0
-        INC HL
-        LD (HL),#05
-        INC HL
         LD (HL),#05
         
 MAIN_LOOP:
-        CALL CLEAR_SHADOW_SCREEN
+        ;DI
 
-        ; load player coordinates
-        LD HL,PLAYER_COORD
-        LD B,(HL)
-        INC HL
-        LD C,(HL)   
-        LD A,1
-        LD HL,SPRITE_PLAYER
-        CALL DRAW_SPRITE
+        CALL CLEAR_SHADOW_SCREEN               
+
+        CALL DRAW_PLAYER
 
         CALL DRAW_SHOT
         
-        CALL DRAW_ENEMY
+        CALL DRAW_ENEMY       
         
-        ; create enemy        
-        PUSH AF
-        CALL GET_RANDOM
-        CP 2
-        JR NC,MAIN_LOOP_NOT_CE
-        CALL CREATE_ENEMY
-MAIN_LOOP_NOT_CE:
-        POP AF
+        CALL CREATE_ENEMIES
+        
+        ;EI
         
         HALT
         CALL COPY_SHADOW_SCREEN
@@ -146,11 +130,7 @@ MOVE_UP:
         JR Z,BOUND_UP
         DEC B
 BOUND_UP:        
-        LD (HL),B
-        ; set flag to need clear old sprite
-        INC HL
-        INC HL
-        LD (HL),1
+        LD (HL),B        
         POP AF
         POP HL
         
@@ -199,11 +179,7 @@ MOVE_DOWN:
         JR Z,BOUND_DOWN
         INC B
 BOUND_DOWN:        
-        LD (HL),B
-        ; set flag to need clear old sprite
-        INC HL
-        INC HL
-        LD (HL),1
+        LD (HL),B        
         POP AF
         POP HL
         
@@ -253,10 +229,7 @@ MOVE_LEFT:
         JR Z,BOUND_LEFT
         DEC B
 BOUND_LEFT:        
-        LD (HL),B
-        ; set flag to need clear old sprite
-        INC HL        
-        LD (HL),1
+        LD (HL),B        
         POP AF
         POP HL
         
@@ -306,10 +279,7 @@ MOVE_RIGHT:
         JR Z,BOUND_RIGHT
         INC B
 BOUND_RIGHT:        
-        LD (HL),B
-        ; set flag to need clear old sprite
-        INC HL        
-        LD (HL),1
+        LD (HL),B        
         POP AF
         POP HL
         
@@ -384,6 +354,7 @@ AFTER_PROCESS_SP:
         EI
         RET
 
+        INCLUDE "PLAYER.asm"
         INCLUDE "FIRE.asm"
         INCLUDE "ENEMY.asm"
         INCLUDE "RANDOM.asm"
@@ -406,14 +377,16 @@ SPRITE_ALIEN    DEFB 1,2
                 DEFB 24,60,126,219,255,36,90,165
                 ; frame 2
                 DEFB 24,60,126,219,255,90,129,66
+                
+FIRE_SPITE      DEFB 1,1
+                DEFB 0,0,69
+                DEFB 0,0,24,60,60,24,0,0                
 
 ;;;;;;;;
 ; DATA ;
 ;;;;;;;;
-                ; 0,1 - current coordinates
-                ; 2   - flag changes coordinates
-                ; 3,4 - old coordinates
-PLAYER_COORD    DEFB 0,0,0,0,0
+                ; 0,1 - current coordinates                
+PLAYER_COORD    DEFB 0,0
 
                 ; 0   - bit mask current shots (max 8 shots)
                 ; 1   - shot move counter
@@ -429,10 +402,6 @@ FIRE_INFO       DEFB 0
                 DEFB 0,0,0,0,0,0
                 DEFB 0,0,0,0,0,0
                 DEFB 0,0,0,0,0,0
-
-FIRE_SPITE      DEFB 1,1
-                DEFB 0,0,69
-                DEFB 0,0,24,60,60,24,0,0
                 
 ENEMY_INFO      DEFB 0
                 ; 0     - move counter

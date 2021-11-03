@@ -214,7 +214,23 @@ END_ENEMY_MOVING:
         POP BC
         POP AF
 
-        RET        
+        RET
+        
+;;;;;;;;;;;;;;;;;;
+; CREATE_ENEMIES ;
+;;;;;;;;;;;;;;;;;;        
+CREATE_ENEMIES:
+        PUSH AF
+        
+        CALL GET_RANDOM
+        CP 2
+        JR NC,MAIN_LOOP_NOT_CE
+        CALL CREATE_ENEMY
+MAIN_LOOP_NOT_CE:
+
+        POP AF
+
+        RET
         
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; DRAW ENEMY FUNCTION ;
