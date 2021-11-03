@@ -66,9 +66,7 @@ begin_file:
         INC HL
         LD (HL),#05
         
-MAIN_LOOP:
-        ;DI
-
+MAIN_LOOP:        
         CALL CLEAR_SHADOW_SCREEN               
 
         CALL DRAW_PLAYER
@@ -77,9 +75,7 @@ MAIN_LOOP:
         
         CALL DRAW_ENEMY       
         
-        CALL CREATE_ENEMIES
-        
-        ;EI
+        CALL CREATE_ENEMIES               
         
         HALT
         CALL COPY_SHADOW_SCREEN
@@ -390,18 +386,16 @@ PLAYER_COORD    DEFB 0,0
 
                 ; 0   - bit mask current shots (max 8 shots)
                 ; 1   - shot move counter
-                ; 3,4 - current coordinates
-                ; 5   - flag changes coordinates
-                ; 6,7 - old coordinates
+                ; 3,4 - current coordinates                
 FIRE_INFO       DEFB 0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
+                DEFB 0,0,0
                 
 ENEMY_INFO      DEFB 0
                 ; 0     - move counter

@@ -57,7 +57,7 @@ END_FIND_SLOT:
         INC HL
         
         ; shift memory to free shot slot        
-        LD DE,6
+        LD DE,3
         LD A,B
         CP 0
         JR Z,END_SHIFT_MEM
@@ -86,14 +86,7 @@ END_SHIFT_MEM:
         
         LD (HL),B
         INC HL
-        LD (HL),C
-        INC HL        
-        ; changes coordinates flag
-        LD (HL),0
-        INC HL
-        LD (HL),B
-        INC HL
-        LD (HL),C
+        LD (HL),C        
         
         POP BC
         
@@ -129,7 +122,7 @@ START_MOVE_SHOT:
         JR NZ,PROCESS_MOVE_SHOT
         
 CONTINUE_MOVE_SHOTS:
-        LD BC,6
+        LD BC,3
         ADD HL,BC
 
         LD A,D
@@ -167,12 +160,9 @@ DO_MOVE_SHOT:
         CP 0
         JR Z,SHOT_BOUND_UP
         DEC B
-        LD (HL),B
-        ; set change coordinates flag
+        LD (HL),B        
         INC HL        
-        LD C,(HL)
-        INC HL
-        LD (HL),1
+        LD C,(HL)        
         
         CALL CHECK_SHOT_COLLISION
         ; check A registry for destroy shot
@@ -233,7 +223,7 @@ START_DRAW_SHOT:
         CP 0
         JR NZ,PR_DRAW_SHOT
 CONTINUE_DRAW_SHOTS:
-        LD BC,6
+        LD BC,3
         ADD HL,BC
 
         LD A,D
@@ -250,16 +240,12 @@ PR_DRAW_SHOT:
         
         LD B,(HL)
         INC HL
-        LD C,(HL)               
-        
-        LD A,B
-        CP 0
-        JR Z,OUTOFBOUND_SHOT
+        LD C,(HL)
         
         LD HL,FIRE_SPITE
         LD A,1
         CALL DRAW_SPRITE
-OUTOFBOUND_SHOT:
+        
         POP HL
         
         JR CONTINUE_DRAW_SHOTS

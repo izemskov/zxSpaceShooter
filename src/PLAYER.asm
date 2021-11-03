@@ -18,13 +18,18 @@ DRAW_PLAYER:
         PUSH AF
         PUSH BC
         PUSH HL
-
+        
         ; load player coordinates
+        DI
+        
         LD HL,PLAYER_COORD
         LD B,(HL)
         INC HL
         LD C,(HL)   
-        LD A,1
+        
+        EI
+        
+        LD A,1               
         LD HL,SPRITE_PLAYER
         CALL DRAW_SPRITE
         
