@@ -10,7 +10,7 @@
 ;AUTHOR:  Ilya Zemskov, 2021
 ;         pascal.ilya@gmail.com
 
-        device zxspectrum128
+        device zxspectrum48
 
 SCREEN_STREAM    EQU 5633
 
@@ -399,23 +399,19 @@ FIRE_INFO       DEFB 0
                 
 ENEMY_INFO      DEFB 0
                 ; 0     - move counter
-                ; 1,2   - current coordinates
-                ; 3     - flag changes coordinates
-                ; 4,5   - old coordinates
-                ; 6     - current frame
-                ; 7     - is shot
-                ; 8     - shot move counter
-                ; 9,10  - shot current coordinates
-                ; 11    - flag changes shot coordinates
-                ; 12,13 - old coordinates                
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
-                DEFB 0,0,0,0,0,0,0,0,0,0,0,0,0
+                ; 1,2   - current coordinates                
+                ; 3     - current frame
+                ; 4     - is shot
+                ; 5     - shot move counter
+                ; 6,7   - shot current coordinates                
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
+                DEFB 0,0,0,0,0,0,0,0
                                
 KEY_INFO_W      DEFB 0
 KEY_INFO_S      DEFB 0

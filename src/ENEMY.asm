@@ -57,7 +57,7 @@ ENEMY_END_FIND_SLOT:
         INC HL
         
         ; shift memory to free enemy slot        
-        LD DE,13
+        LD DE,8
         LD A,B
         CP 0
         JR Z,ENEMY_END_SHIFT_MEM
@@ -70,9 +70,7 @@ ENEMY_END_SHIFT_MEM:
         ; reset enemy move counter
         LD A,0
         LD (HL),A
-        
-        ; put fire coordinates of player
-        ; load player coordinates
+                
         PUSH BC
                 
         LD B,0        
@@ -83,14 +81,7 @@ ENEMY_END_SHIFT_MEM:
         
         LD (HL),B
         INC HL
-        LD (HL),C
-        INC HL
-        ; changes coordinates flag
-        LD (HL),0
-        INC HL
-        LD (HL),B
-        INC HL
-        LD (HL),C
+        LD (HL),C        
         ; current frame
         INC HL
         LD (HL),1
@@ -129,7 +120,7 @@ START_MOVE_ENEMY:
         JR NZ,PROCESS_MOVE_ENEMY
         
 CONTINUE_MOVE_ENEMIES:
-        LD BC,13
+        LD BC,8
         ADD HL,BC
 
         LD A,D
@@ -170,12 +161,8 @@ DO_MOVE_ENEMY:
         LD (HL),B
         ; set change coordinates flag
         INC HL        
-        INC HL
-        LD (HL),1
         
-        ; change current frame
-        INC HL
-        INC HL
+        ; change current frame        
         INC HL
         LD A,(HL)
         INC A
@@ -223,7 +210,7 @@ CREATE_ENEMIES:
         PUSH AF
         
         CALL GET_RANDOM
-        CP 2
+        CP 10
         JR NC,MAIN_LOOP_NOT_CE
         CALL CREATE_ENEMY
 MAIN_LOOP_NOT_CE:
@@ -254,7 +241,7 @@ START_DRAW_ENEMY:
         CP 0
         JR NZ,PR_DRAW_ENEMY
 CONTINUE_DRAW_ENEMY:
-        LD BC,13
+        LD BC,8
         ADD HL,BC
 
         LD A,D
@@ -271,22 +258,14 @@ PR_DRAW_ENEMY:
         
         LD B,(HL)
         INC HL
-        LD C,(HL)
-        
-        INC HL              
-        
-        LD A,B
-        CP 23
-        JR Z,OUTOFBOUND_ENEMY
+        LD C,(HL)               
                 
-        ; load current frame
-        INC HL
-        INC HL
+        ; load current frame        
         INC HL
         LD A,(HL)
         LD HL,SPRITE_ALIEN
         CALL DRAW_SPRITE
-OUTOFBOUND_ENEMY:
+        
         POP HL
         
         JR CONTINUE_DRAW_ENEMY

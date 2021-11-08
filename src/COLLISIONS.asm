@@ -38,7 +38,7 @@ START_CHCKCO_SHOT:
         
 CONTINUE_CHCKCO_SHOT:
         PUSH BC
-        LD BC,13
+        LD BC,8
         ADD HL,BC
         POP BC
 
