@@ -151,9 +151,27 @@ WRITE_MOVE_COUNTER:
         LD (HL),A
         JR CONTINUE_MOVE_SHOTS
         
-DO_MOVE_SHOT:        
+DO_MOVE_SHOT:
+        ; check collisions before move
         PUSH HL
         
+        ; skip move counter
+        INC HL
+        LD B,(HL)
+        INC HL        
+        LD C,(HL)
+        
+        CALL CHECK_SHOT_COLLISION
+        ; check A registry for destroy shot
+        CP 0
+        JR Z,SHOT_BOUND_UP   
+        
+        POP HL
+        
+        ; move shot
+        PUSH HL
+        
+        ; skip move counter
         INC HL
         LD B,(HL)
         LD A,B
@@ -164,6 +182,7 @@ DO_MOVE_SHOT:
         INC HL        
         LD C,(HL)        
         
+        ; check collisions after move
         CALL CHECK_SHOT_COLLISION
         ; check A registry for destroy shot
         CP 0

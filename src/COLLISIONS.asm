@@ -112,9 +112,8 @@ END_CHCKCO_SHOT:
 ;PARAMETERS:
         ; BC - Y and X coordinates of enemy
 ;RETURN:
-        ; A  - 1 - destroy enemy; 0 - not destroy enemy
-CHECK_ENEMY_COLLISION:
-        PUSH AF
+        ; A  - 0 - destroy shot; 1 - not destroy shot
+CHECK_ENEMY_COLLISION:        
         PUSH BC
         PUSH DE
         PUSH HL
@@ -133,7 +132,7 @@ START_CHKCO_ENEMY:
         JR NZ,PROCESS_CHKCO_ENEMY
         
 CONTINUE_CHKCO_ENEMY:
-        LD BC,6
+        LD BC,3
         ADD HL,BC
 
         LD A,D
@@ -181,7 +180,9 @@ PROCESS_CHKCO_ENEMY:
         POP DE
         POP HL
         
-        JR CONTINUE_CHKCO_ENEMY
+        LD A,0
+        
+        JR END_CHKCO_ENEMY
                 
 NOT_COLLISION_ENEMY:                
         POP AF
@@ -194,7 +195,6 @@ END_CHKCO_ENEMY:
         
         POP HL
         POP DE
-        POP BC
-        POP AF
+        POP BC        
 
         RET        

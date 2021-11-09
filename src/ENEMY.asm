@@ -158,9 +158,9 @@ DO_MOVE_ENEMY:
         CP 23
         JR Z,ENEMY_BOUND_DOWN
         INC B
-        LD (HL),B
-        ; set change coordinates flag
-        INC HL        
+        LD (HL),B        
+        INC HL
+        LD C,(HL)       
         
         ; change current frame        
         INC HL
