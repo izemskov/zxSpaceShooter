@@ -72,7 +72,9 @@ PROCESS_CHCKCO_SHOT:
         POP DE        
         POP HL               
         
-        ; destroy enemy        
+        ; destroy enemy
+        CALL INC_SCORE
+        
         PUSH HL
         PUSH DE
         LD A,D

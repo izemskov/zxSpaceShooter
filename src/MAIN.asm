@@ -75,7 +75,9 @@ MAIN_LOOP:
         
         CALL DRAW_ENEMY       
         
-        CALL CREATE_ENEMIES               
+        CALL CREATE_ENEMIES        
+
+        CALL DRAW_SCORE
         
         HALT
         CALL COPY_SHADOW_SCREEN
@@ -356,6 +358,7 @@ AFTER_PROCESS_SP:
         INCLUDE "RANDOM.asm"
         INCLUDE "COLLISIONS.asm"
         INCLUDE "COMMON.asm"
+        INCLUDE "SCORE.asm"
 
 ; GLOBAL VARIABLES AND DATA
 ;;;;;;;;;;;
@@ -418,6 +421,21 @@ KEY_INFO_S      DEFB 0
 KEY_INFO_A      DEFB 0
 KEY_INFO_D      DEFB 0
 KEY_INFO_SP     DEFB 0
+
+NUMBER          DEFB 1,10
+                DEFB 0,0,69
+                DEFB 0,60,102,110,118,102,60,0   ; 0
+                DEFB 0,24,56,24,24,24,60,0       ; 1
+                DEFB 0,60,102,6,60,96,126,0      ; 2
+                DEFB 0,60,102,12,6,102,60,0      ; 3
+                DEFB 0,12,28,44,76,126,12,0      ; 4
+                DEFB 0,124,96,124,6,70,60,0      ; 5
+                DEFB 0,60,96,124,102,102,60,0    ; 6
+                DEFB 0,126,6,12,24,48,48,0       ; 7
+                DEFB 0,60,102,60,102,102,60,0    ; 8
+                DEFB 0,60,102,102,62,6,60,0      ; 9
+        
+SCORES          DEFB 0,0,0,0
 
 end_file:
 

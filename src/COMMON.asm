@@ -40,10 +40,10 @@ IM2_B_DATA       EQU #FF
     ; BC - Y [0..23] AND
     ;      X [0..31]
     ; A  - ATTRIBUTES
-    ; 0..3 - Ink
-    ; 4..6 - Paper
-    ; 5    - Bright
-    ; 6    - Flash
+    ; 0..2 - Ink
+    ; 3..5 - Paper
+    ; 6    - Bright
+    ; 7    - Flash
 ; Working with video memory directly.
 ; For this I need to calculate the 
 ; offset from start address of video
