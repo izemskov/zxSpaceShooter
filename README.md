@@ -1,11 +1,11 @@
 # ZX Space Shooter
-;SPACE SHOOTER GAME
-;
-;ASM:     SJASMPLUS v1.18.3
-;CPU:     Zilog Z80, 3.5MHz
-;RAM:     48Kb or 128Kb
-;SCREEN:  265x192 pixels,
-;         32x24 color attributes
-;CTRL:    Keyboard
+;SPACE SHOOTER GAME<br/>
+;<br/>
+;ASM:     SJASMPLUS v1.18.3<br/>
+;CPU:     Zilog Z80, 3.5MHz<br/>
+;RAM:     48Kb or 128Kb<br/>
+;SCREEN:  265x192 pixels,<br/>
+;         32x24 color attributes<br/>
+;CTRL:    Keyboard<br/>
 <br/>
 ![](screen.gif)
